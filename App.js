@@ -8,16 +8,77 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, FlatList,} from 'react-native';
 import Inputs from './input.js';
+import MemoItem from './item.js';
 
 
 export default class App extends Component<{}> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list: [],
+    };
+  }
+
+  _onPress = (text) => {
+    const list = [].concat(this.state.list);
+
+    list.push({
+      key: Date.now(),
+      text: text,
+      done: false,
+      });
+
+    this.setState({
+      list,
+      });
+  }
+
   render() {
-    return (
-      <View >
-      <Inputs />
+    const {
+      list,
+    } = this.state;
+
+      return (
+      <View style={styles.container}>
+        <View style={styles.main}>
+          <Inputs onPress={this._onPress} />
+          <View style={styles.listContainer}>
+             <FlatList
+              style={styles.memoList}
+              data={list}
+              renderItem={({ item }) => <MemoItem {...item} />}
+             />
+          </View>
+        </View>
       </View>
       );
     }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#333',
+    paddingTop: 40,
+    alignItems: 'center',
+  },
+  main: {
+    flex: 1,
+    maxWidth: 400,
+    alignItems: 'center',
+  },
+  listContainer: {
+    flexDirection: 'row',
+    flex: 1,
+
+  },
+  memoList: {
+    borderRadius: 16,
+    paddingTop: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+});
