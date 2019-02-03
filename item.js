@@ -9,6 +9,8 @@ import Button from './button.js';
 const MemoItem = (props) => {
   const {
     text,
+    onDelete,
+
   } = props;
 
   return (
@@ -16,8 +18,11 @@ const MemoItem = (props) => {
       <View style={styles.left}>
         <Text style={styles.text} >{text}</Text>
       </View>
-      <Button style={styles.button_delete}>
-        Delete
+      <Button
+        style={styles.button_delete}
+        onPress={onDelete}
+        >
+          Delete
       </Button>
     </View>
   );

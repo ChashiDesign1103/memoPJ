@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class TodoInput extends Component {
+export default class Input extends Component {
   constructor(props) {
     super(props);
 
@@ -20,7 +20,6 @@ export default class TodoInput extends Component {
   }
 
 
-
   render() {
     const {
       onPress,
@@ -28,16 +27,16 @@ export default class TodoInput extends Component {
 
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          ref={(ref) => {this.ref = ref; }}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this._onPress}
-        >
-          <Text style={styles.buttonText}>追加</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.textInput}
+            ref={(ref) => {this.ref = ref; }}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this._onPress}
+          >
+            <Text style={styles.buttonText}>追加</Text>
+          </TouchableOpacity>
       </View>
     );
   }

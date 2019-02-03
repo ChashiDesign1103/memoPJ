@@ -8,8 +8,15 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, FlatList,} from 'react-native';
-import Inputs from './input.js';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  FlatList,
+  } from 'react-native';
+import Input from './input.js';
 import MemoItem from './item.js';
 
 
@@ -20,6 +27,15 @@ export default class App extends Component<{}> {
     this.state = {
       list: [],
     };
+  }
+
+  _delete = (index) => () => {
+    const list = [].concat(this.state.list);
+    list.splice(index, 1);
+
+    this.setState({
+      list,
+    });
   }
 
   _onPress = (text) => {
@@ -33,7 +49,7 @@ export default class App extends Component<{}> {
 
     this.setState({
       list,
-      });
+    });
   }
 
   render() {
@@ -43,16 +59,21 @@ export default class App extends Component<{}> {
 
       return (
       <View style={styles.container}>
-        <View style={styles.main}>
-          <Inputs onPress={this._onPress} />
-          <View style={styles.listContainer}>
-             <FlatList
-              style={styles.memoList}
-              data={list}
-              renderItem={({ item }) => <MemoItem {...item} />}
-             />
+          <View style={styles.main}>
+            <Input onPress={this._onPress} />
+            <View style={styles.listContainer}>
+              <FlatList
+                style={styles.memoList}
+                data={list}
+                renderItem={({ item, index }) => (
+                  <MemoItem
+                    onDelete={this._delete(index)}
+                    {...item}
+                  />
+                )}
+               />
+            </View>
           </View>
-        </View>
       </View>
       );
     }
